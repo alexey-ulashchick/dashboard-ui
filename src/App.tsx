@@ -13,13 +13,9 @@ function App() {
 
     const resp = response as GoogleLoginResponse;
     const grpcSingInRequest = new SignInUserRequest();
-
-    grpcSingInRequest.setEmail(resp.getBasicProfile().getEmail());
-    grpcSingInRequest.setFirstName(resp.getBasicProfile().getGivenName());
-    grpcSingInRequest.setLastName(resp.getBasicProfile().getFamilyName());
-    grpcSingInRequest.setImageUrl(resp.getBasicProfile().getImageUrl());
-
     const client = new AuthServiceClient("http://localhost:8080");
+
+    grpcSingInRequest.setIdToken(resp.tokenId);
 
     client.signIn(grpcSingInRequest, (err, response) => {
         if (err) {
